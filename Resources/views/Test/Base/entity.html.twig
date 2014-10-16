@@ -1,0 +1,55 @@
+{% extends 'SDLabSmartUtilsBundle::base.html.twig' %}
+
+{% block body %}
+
+<h2>sdlab-smart-utils Bundle - entity test</h2>
+    
+<div id="container"
+     class="row"
+     data-cascade="{{ cascadeData|json_encode() }}"
+     >
+    <div class="col-md-2">
+
+        <select id="select1" class="form-control"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select2" class="form-control"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select3" class="form-control">
+            <option value="5" selected="selected">Test BAB</option>
+        </select>
+        
+    </div>
+</div>
+
+
+
+<script>
+    
+    $().ready(function() {
+    
+        $('#container').cascadeselect({
+            'data': $('#container').data('cascade'),
+            'selects': [{
+                'selector': '#select1',
+                'emptyLabel': '...'
+            },{
+                'selector': '#select2',
+                'emptyLabel': '...'
+            },{
+                'selector': '#select3',
+                'emptyLabel': '...'
+            }]
+        });
+    
+    });
+    
+</script>
+
+{% endblock body %}
+

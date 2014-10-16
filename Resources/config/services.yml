@@ -2,3 +2,5 @@ parameters:
 
 
 services:
+    cascade_select_manager:
+      class: SDLab\Bundle\SmartUtilsBundle\Manager\CascadeManager

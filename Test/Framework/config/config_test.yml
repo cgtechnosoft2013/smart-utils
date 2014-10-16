@@ -35,10 +35,11 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: false
-        #mappings:
-        #    default:
-        #        type: annotation
-        #        dir: %kernel.root_dir%/../Entity
-        #        prefix: SDLab\Bundle\SmartUtilsBundle\Test\Entity
-                
+        mappings:
+            SDLabSmartUtilsBundle:
+                type: annotation
+                is_bundle: false
+                dir: /var/www/sdlab-smart-utils/Test/Entity
+                prefix: SDLab\Bundle\SmartUtilsBundle\Test\Entity
+                alias: SDLabSmartUtilsBundle
                 

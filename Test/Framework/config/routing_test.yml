@@ -1,0 +1,5 @@
+
+SmartUtilsBundle_test:
+    resource: "@SDLabSmartUtilsBundle/Test/Controller/"
+    type:     annotation
+    prefix:   /

@@ -1,0 +1,50 @@
+{
+    "name": "sdlab/smart-utils-bundle",
+    "type": "symfony-bundle",
+    "description": "SDLab : SmartUtils bundle",
+    "target-dir": "SDLab/Bundle/SmartUtilsBundle",
+    "require": {
+        "php":                           ">=5.3.3",
+        "symfony/symfony":               ">=2.3.0",
+        "sensio/distribution-bundle":    "*",
+        "sensio/framework-extra-bundle": "*",
+        "doctrine/orm":                  "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle":      "*"
+    },
+    "require-dev": {
+        "behat/behat":                  "~2.4",
+        "behat/symfony2-extension":     "~1.0",
+        "behat/mink-extension":         "~1.0",
+        "behat/mink-goutte-driver":     "*",
+        "behat/mink-selenium2-driver":  "*",
+        
+        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "symfony/monolog-bundle":       "~2.1",
+        "components/jquery":            "*",
+        "components/bootstrap":         "*",
+        "components/font-awesome":      "*"
+    },
+    "config": {
+        "component-dir": "vendor",
+        "bin-dir": "bin/"
+    },
+    "autoload": {
+        "psr-0": { 
+            "Test\\Script\\ScriptHandler" : "",
+            "SDLab\\Bundle\\SmartUtilsBundle": ""
+        }
+    },
+    "target-dir": "SDLab/Bundle/SmartUtilsBundle",
+    "scripts": {
+        "post-install-cmd": [
+            "Test\\Script\\ScriptHandler::addComponentsSymlink",
+            "Test\\Script\\ScriptHandler::addJSSymlink",
+            "Test\\Script\\ScriptHandler::addCssSymlink"
+        ],
+        "post-update-cmd": [
+            "Test\\Script\\ScriptHandler::addComponentsSymlink",
+            "Test\\Script\\ScriptHandler::addJSSymlink",
+            "Test\\Script\\ScriptHandler::addCssSymlink"
+        ]
+    }
+}

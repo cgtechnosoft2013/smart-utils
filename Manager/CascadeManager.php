@@ -38,6 +38,9 @@ class CascadeManager
         
         $labelAccessor = isset($this->options[$level]['labelAccessor']) ? $this->options[$level]['labelAccessor'] : null;
         $valueAccessor = isset($this->options[$level]['valueAccessor']) ? $this->options[$level]['valueAccessor'] : null;
+        $groupAccessor = isset($this->options[$level]['groupAccessor']) ? $this->options[$level]['groupAccessor'] : null;
+        $extraDataAccessor = isset($this->options[$level]['extraDataAccessor']) ? $this->options[$level]['extraDataAccessor'] : null;
+        
         
         $cascadeData = array();
         foreach($data as $element) {
@@ -51,11 +54,21 @@ class CascadeManager
             }
             
 
-            $cascadeData[] = array(
+            $cascadeDataRow = array(
                 'label' => $labelAccessor ? $accessor->getValue($element, $labelAccessor) : (string) $element,
                 'value' => $valueAccessor ? $accessor->getValue($element, $valueAccessor) : uniqid(),
                 'children' => $children
             );
+            
+            if(null != $groupAccessor) {
+                $cascadeDataRow['group'] = $accessor->getValue($element, $groupAccessor);
+            }
+            
+            if(null != $extraDataAccessor) {
+                $cascadeDataRow['data'] = $accessor->getValue($element, $extraDataAccessor);
+            }
+            
+            $cascadeData[] = $cascadeDataRow;
 
         }            
         

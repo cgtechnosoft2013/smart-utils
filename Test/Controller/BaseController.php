@@ -82,4 +82,43 @@ class BaseController extends Controller
         return array();
     }
     
+    /**
+     * @Route("/cascadeselect/test/entity-select2", name="cascadeselect-entity-select2")
+     * @Template("SDLabSmartUtilsBundle:Test:Base/entitySelect2.html.twig")
+     */
+    public function entitySelect2Action()
+    {
+        $em = $this->get('doctrine')->getManager();
+        $qb = $em->getRepository('SDLabSmartUtilsBundle:LevelA')->createQueryBuilder('a');
+        $qb ->select('a', 'b', 'c')
+            ->leftJoin('a.children', 'b')
+            ->leftJoin('b.children', 'c')
+        ;
+        
+        $data = $qb->getQuery()->getResult();
+                 
+        $cascadeData = $this->get('cascade_select_manager')->manage($data, array(
+            1 => array(
+                'nextLevelAccessor' => 'children',
+                'valueAccessor' => 'id',
+                'labelAccessor' => 'name'
+            ),
+            2 => array(
+                'nextLevelAccessor' => 'children',
+                'valueAccessor' => 'id',
+                'labelAccessor' => 'name'
+            ),
+            3 => array(
+                'valueAccessor' => 'id',
+                'labelAccessor' => 'name',
+                'groupAccessor' => 'group',
+                'extraDataAccessor' => 'extraData'
+            )
+        ));
+        
+        return array(
+            'cascadeData' => $cascadeData
+        );
+    }
+    
 }

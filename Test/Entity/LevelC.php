@@ -32,6 +32,15 @@ class LevelC
      */
     private $parent;
     
+    public function getGroup()
+    {
+        return $this->id < 5 ? 'Group1' : 'Group2' ;
+    }
+    
+    public function getExtraData()
+    {
+        return array('subtitle' => 'Subtitle for '.$this->name);
+    }
     
 
     /**

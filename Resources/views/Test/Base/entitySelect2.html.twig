@@ -1,0 +1,73 @@
+{% extends 'SDLabSmartUtilsBundle::base.html.twig' %}
+
+{% block body %}
+
+<h2>sdlab-smart-utils Bundle - select2 entity test</h2>
+    
+<div id="container" 
+     class="row"
+     data-cascade="{{ cascadeData|json_encode() }}" >
+    
+    <div class="col-md-2">
+
+        <select id="select1" class="form-control" multiple="true"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select2" class="form-control" multiple="true"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select3">
+            <option>...</option>
+            <option value="5" selected="selected">Test BAB</option>
+        </select>
+        
+    </div>
+</div>
+
+
+
+<script>
+    
+    var addSubTitle = function(object, container, query) {
+        
+        if (!object.id) return object.text; // optgroup
+        
+        var subtitle = $(object.element[0].outerHTML).data('subtitle');
+        return object.text + '<br><small>' + (typeof subtitle !== 'undefined' ? subtitle : '') + '</small>';
+    };
+
+    $().ready(function(){
+        
+        $('#container').cascadeselect({
+            'data': $('#container').data('cascade'),
+            'selects': [{
+                'selector': '#select1',
+                'emptyLabel': '...'
+            },{
+                'selector': '#select2',
+                'emptyLabel': '...'
+            },{
+                'selector': '#select3',
+                'emptyLabel': '...'
+            }]
+        });
+
+        
+        $('#select3').select2({
+            'width': '100%',
+            formatResult: addSubTitle,
+            formatSelection: addSubTitle
+        });
+
+    });
+    
+
+    
+</script>
+
+{% endblock body %}
+

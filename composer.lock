@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4e4813be3bb64ed38c159e1ae9145f1c",
+    "hash": "fec1ac86048ad66a6e514104eaad5577",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2094,6 +2094,49 @@
                 "webtest"
             ],
             "time": "2014-05-08 04:19:19"
+        },
+        {
+            "name": "ivaynberg/select2",
+            "version": "3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivaynberg/select2.git",
+                "reference": "8cc9d48d5881a5760178b5cd615c5174fbd98672"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/8cc9d48d5881a5760178b5cd615c5174fbd98672",
+                "reference": "8cc9d48d5881a5760178b5cd615c5174fbd98672",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.7.1",
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "select2.js"
+                    ],
+                    "files": [
+                        "select2.js",
+                        "select2_locale_*.js",
+                        "select2.css",
+                        "select2-bootstrap.css",
+                        "select2-spinner.gif",
+                        "select2.png",
+                        "select2x2.png"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Select2 is a jQuery based replacement for select boxes.",
+            "homepage": "http://ivaynberg.github.io/select2/",
+            "time": "2014-07-22 22:59:02"
         },
         {
             "name": "kriswallsmith/assetic",

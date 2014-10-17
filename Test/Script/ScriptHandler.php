@@ -15,6 +15,13 @@ class ScriptHandler extends BaseScriptHandler
         shell_exec('ln -s '.$compentsDir.' '.$webDir);
     }
     
+    public static function addSelect2Symlink(CommandEvent $event)
+    {
+        $compentsDir = __DIR__.'/../../vendor/ivaynberg/select2';
+        $webDir = __DIR__.'/../Framework/web/select2';
+        shell_exec('ln -s '.$compentsDir.' '.$webDir);
+    }
+    
     public static function addJSSymlink(CommandEvent $event)
     {
         $compentsDir = __DIR__.'/../../Resources/public/js';

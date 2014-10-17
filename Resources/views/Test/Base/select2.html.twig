@@ -1,0 +1,86 @@
+{% extends 'SDLabSmartUtilsBundle::base.html.twig' %}
+
+{% block body %}
+
+<h2>sdlab-smart-utils Bundle - select2 test</h2>
+    
+<div id="container" class="row">
+    <div class="col-md-2">
+
+        <select id="select1" class="form-control" multiple="true"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select2" class="form-control" multiple="true"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select3">
+            <option>...</option>
+            <option value="131" selected="selected">ACA</option>
+        </select>
+        
+    </div>
+</div>
+
+
+
+<script>
+
+    var data = [
+        { 'label': 'A', 'value': 1, children: [
+            { 'label': 'AA', 'value': 11, children: [
+                { 'label': 'AAA', 'value': 111, 'group': 'Group AAA' },
+                { 'label': 'AAB', 'value': 112, 'group': 'Group AAA' }
+            ]},
+            { 'label': 'AB', 'value': 12, children: [
+                { 'label': 'ABA', 'value': 121, 'group': 'Group BBB' }
+            ]},
+            { 'label': 'AC', 'value': 13, children: [
+                { 'label': 'ACA', 'value': 131, 'group': 'Group BBB' },
+                { 'label': 'ACB', 'value': 132, 'group': 'Group AAA' },
+                { 'label': 'ACC', 'value': 133, 'group': 'Group BBB' }
+            ]}
+        ]},
+        { 'label': 'B', 'value': 2, children: [
+            { 'label': 'BA', 'value': 21, children: [
+                { 'label': 'BAB', 'value': 211, 'group': 'Group AAA' }
+            ]},
+            { 'label': 'BB', 'value': 22, children: [
+                { 'label': 'BBA', 'value': 221, 'group': 'Group BBB' },
+                { 'label': 'BBB', 'value': 222, 'group': 'Group AAA' },
+                { 'label': 'BBC', 'value': 223, 'group': 'Group AAA' }
+            ]}
+        ]}
+    ];
+    
+    $().ready(function(){
+        
+        $('#container').cascadeselect({
+            'data': data,
+            'selects': [{
+                'selector': '#select1',
+                'emptyLabel': '...'
+            },{
+                'selector': '#select2',
+                'emptyLabel': '...'
+            },{
+                'selector': '#select3',
+                'emptyLabel': '...'
+            }]
+        });
+        
+        $('#select3').select2({
+            'width': '100%'
+        });
+        
+    });
+    
+
+    
+</script>
+
+{% endblock body %}
+

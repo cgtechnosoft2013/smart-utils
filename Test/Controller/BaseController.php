@@ -73,4 +73,13 @@ class BaseController extends Controller
         return array();
     }
     
+    /**
+     * @Route("/cascadeselect/test/select2", name="cascadeselect-select2")
+     * @Template("SDLabSmartUtilsBundle:Test:Base/select2.html.twig")
+     */
+    public function select2Action()
+    {
+        return array();
+    }
+    
 }

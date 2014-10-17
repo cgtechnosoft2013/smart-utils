@@ -22,7 +22,8 @@
         "symfony/monolog-bundle":       "~2.1",
         "components/jquery":            "*",
         "components/bootstrap":         "*",
-        "components/font-awesome":      "*"
+        "components/font-awesome":      "*",
+        "ivaynberg/select2":            "*"
     },
     "config": {
         "component-dir": "vendor",
@@ -38,11 +39,13 @@
     "scripts": {
         "post-install-cmd": [
             "Test\\Script\\ScriptHandler::addComponentsSymlink",
+            "Test\\Script\\ScriptHandler::addSelect2Symlink",
             "Test\\Script\\ScriptHandler::addJSSymlink",
             "Test\\Script\\ScriptHandler::addCssSymlink"
         ],
         "post-update-cmd": [
             "Test\\Script\\ScriptHandler::addComponentsSymlink",
+            "Test\\Script\\ScriptHandler::addSelect2Symlink",
             "Test\\Script\\ScriptHandler::addJSSymlink",
             "Test\\Script\\ScriptHandler::addCssSymlink"
         ]

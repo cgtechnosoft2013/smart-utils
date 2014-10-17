@@ -94,15 +94,22 @@
             });
         }
         
-        var currentGroup = '';
+        var currentGroup = null;
+        var $currentGroup = null;
         for(var index in options) {
             
             if(typeof options[index].group !== 'undefined' && currentGroup !== options[index].group) {
                 $select.append('<optgroup label="' + options[index].group + '" />');
                 currentGroup = options[index].group;
+                $currentGroup = $select.find('optgroup[label="' + currentGroup + '"]');
             }
             
-            $select.append('<option value="' + options[index].value + '">' + options[index].label + '</option>');
+            var htmlOption = '<option value="' + options[index].value + '">' + options[index].label + '</option>';
+            if(null !== currentGroup) {
+                $currentGroup.append(htmlOption);
+            } else {
+                $select.append(htmlOption);
+            }
         }
         
         // re-select previously selected option (multiple select case only)

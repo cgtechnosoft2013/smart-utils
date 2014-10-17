@@ -87,7 +87,21 @@
         
         $select.append('<option>' + this.options.selects[level-1].emptyLabel + '</option>');
         
+        // sort in groups
+        if(options.length > 0) {
+            options.sort(function(a, b) { 
+                return a.group > b.group;
+            });
+        }
+        
+        var currentGroup = '';
         for(var index in options) {
+            
+            if(typeof options[index].group !== 'undefined' && currentGroup !== options[index].group) {
+                $select.append('<optgroup label="' + options[index].group + '" />');
+                currentGroup = options[index].group;
+            }
+            
             $select.append('<option value="' + options[index].value + '">' + options[index].label + '</option>');
         }
         

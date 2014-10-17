@@ -63,4 +63,14 @@ class BaseController extends Controller
             'cascadeData' => $cascadeData
         );
     }
+    
+    /**
+     * @Route("/cascadeselect/test/group", name="cascadeselect-group")
+     * @Template("SDLabSmartUtilsBundle:Test:Base/group.html.twig")
+     */
+    public function groupAction()
+    {
+        return array();
+    }
+    
 }

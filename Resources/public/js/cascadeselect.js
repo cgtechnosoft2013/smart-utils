@@ -85,7 +85,9 @@
         
         $select.html('');
         
-        $select.append('<option>' + this.options.selects[level-1].emptyLabel + '</option>');
+        if(!$select.attr('multiple')) {
+            $select.append('<option>' + this.options.selects[level-1].emptyLabel + '</option>');
+        }
         
         // sort in groups
         if(options.length > 0) {
@@ -104,7 +106,14 @@
                 $currentGroup = $select.find('optgroup[label="' + currentGroup + '"]');
             }
             
-            var htmlOption = '<option value="' + options[index].value + '">' + options[index].label + '</option>';
+            var dataHtml = '';
+            if(typeof options[index].data === 'object') {
+                for(var dataIndex in options[index].data) {
+                    dataHtml += 'data-' + dataIndex + '="' + options[index].data[dataIndex] + '"';
+                }
+            }
+            
+            var htmlOption = '<option value="' + options[index].value + '" ' + dataHtml + '>' + options[index].label + '</option>';
             if(null !== currentGroup) {
                 $currentGroup.append(htmlOption);
             } else {

@@ -147,11 +147,8 @@
         
         var selectedValues = this.getLevelValues(this.maxLevel);
         
-        if(selectedValues.length > 0) {
-        
-            var path = this.createPathFromLastLevelValues(selectedValues);
-            this.applyPathSelection(path);
-        }
+        var path = this.createPathFromLastLevelValues(selectedValues);
+        this.applyPathSelection(path);
     };
     
 
@@ -261,6 +258,10 @@
     
     /**
      * ATTENTION : NON COMPATIBLE AVEC UN FUTUR FONCTIONNEMENT AJAX
+     * 
+     * Create path with list of selected values for each level
+     * Format : [ [level1Values], [level2Values] ...]
+     * 
      */
     CascadeSelect.prototype.createPathFromLastLevelValues = function(searchValues) {
         
@@ -268,6 +269,11 @@
         return path;
     };
     
+    /**
+     * Recursive function, starting to level 1 to maxLevel
+     * 
+     * Add Path values at each level
+     */
     CascadeSelect.prototype.createPathFromLevelValues = function(searchValues, level, levelOptions) {
         
         var levelPath = [];

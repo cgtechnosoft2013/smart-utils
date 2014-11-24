@@ -1,6 +1,8 @@
 
 
 /**
+ * Events :
+ * cascade_select.after_populate
  * 
  * 
  * Definitions:
@@ -125,6 +127,8 @@
         for(var i=0; i<selectionValue.length; i++) {
             $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true);
         }
+        
+        this.$container.trigger('cascade_select.after_populate', [level, options]);
     };    
     
     CascadeSelect.DEFAULTS.fnPouplateFirstLevel = function() {

@@ -86,6 +86,9 @@
         });
         
         $select.html('');
+        if($select.hasClass('select2')) {
+            $select.select2();
+        }
         
         if(!$select.attr('multiple')) {
             $select.append('<option>' + this.options.selects[level-1].emptyLabel + '</option>');

@@ -87,7 +87,7 @@
         
         $select.html('');
         if($select.hasClass('select2')) {
-            $select.select2();
+            $select.select2('val', null);
         }
         
         if(!$select.attr('multiple')) {

@@ -91,7 +91,7 @@
         }
         
         if(!$select.attr('multiple')) {
-            $select.append('<option>' + this.options.selects[level-1].emptyLabel + '</option>');
+            $select.append('<option value="">' + this.options.selects[level-1].emptyLabel + '</option>');
         }
         
         // sort in groups

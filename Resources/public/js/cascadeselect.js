@@ -91,7 +91,7 @@
         }
         
         if(!$select.attr('multiple')) {
-            $select.append('<option value="">' + this.options.selects[level-1].emptyLabel + '</option>');
+            $select.append('<option value="">' + this.escape(this.options.selects[level-1].emptyLabel) + '</option>');
         }
         
         // sort in groups
@@ -105,25 +105,33 @@
         var $currentGroup = null;
         for(var index in options) {
             
-            if(typeof options[index].group !== 'undefined' && currentGroup !== options[index].group) {
-                $select.append('<optgroup label="' + options[index].group + '" />');
-                currentGroup = options[index].group;
+            if(typeof options[index].group !== 'undefined' && currentGroup !== this.escape(options[index].group)) {
+                currentGroup = this.escape(options[index].group);
+                // try to find existent optiongoup, or create new one
                 $currentGroup = $select.find('optgroup[label="' + currentGroup + '"]');
+                if($currentGroup.length === 0) {
+                    $select.append('<optgroup/>');
+                    $select.find('optgroup').last().attr('label', currentGroup) // XSS protection, label must be defined outside $.append
+                    $currentGroup = $select.find('optgroup[label="' + currentGroup + '"]');
+                }
             }
             
-            var dataHtml = '';
+            var dataHtml = ''; // be carefull, options have to be XSS ecaped where there're used
             if(typeof options[index].data === 'object') {
                 for(var dataIndex in options[index].data) {
                     dataHtml += 'data-' + dataIndex + '="' + options[index].data[dataIndex] + '"';
                 }
             }
             
-            var htmlOption = '<option value="' + options[index].value + '" ' + dataHtml + '>' + options[index].label + '</option>';
             if(null !== currentGroup) {
-                $currentGroup.append(htmlOption);
+                var $attachment = $currentGroup;
             } else {
-                $select.append(htmlOption);
+                $attachment = $select;
             }
+            $attachment.append('<option ' + '" ' + dataHtml + ' />');
+            $attachment.find('option').last()
+                .val(this.escape(options[index].value))
+                .text(this.escape(options[index].label));
         }
         
         // re-select previously selected option (multiple select case only)
@@ -348,7 +356,20 @@
         return mergedPath;
     };
     
-    
+    CascadeSelect.prototype.escape = function(codeToEscape) {
+        var entityMap = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': '&quot;',
+            "'": '&#39;',
+            "/": '&#x2F;'
+        };
+        
+        return String(codeToEscape).replace(/[&<>"'\/]/g, function (s) {
+            return entityMap[s];
+        });
+    };    
     
     
     // CASCADESELECT PLUGIN DEFINITION

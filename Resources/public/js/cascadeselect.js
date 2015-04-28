@@ -364,7 +364,7 @@
             '"': '&quot;'
         };
         
-        return String(codeToEscape).replace(/[&<>"'\/]/g, function (s) {
+        return String(codeToEscape).replace(/[&<>"]/g, function (s) {
             return entityMap[s];
         });
     };    

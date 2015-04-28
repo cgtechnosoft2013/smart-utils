@@ -361,9 +361,7 @@
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
-            '"': '&quot;',
-            "'": '&#39;',
-            "/": '&#x2F;'
+            '"': '&quot;'
         };
         
         return String(codeToEscape).replace(/[&<>"'\/]/g, function (s) {

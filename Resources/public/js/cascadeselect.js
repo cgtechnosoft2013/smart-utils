@@ -149,7 +149,7 @@
         for(var level=1; level < this.options.selects.length; level++) {
             var data = this.options.fnGetOptionsForLevel(level, this.options.data);
             var directStart = this.options.selects[level - 1].directStart;
-            if(typeof directStart !== 'undefined' && directStart){       
+            if(typeof directStart !== 'undefined' && directStart || level === 1){       
                 $.proxy(this.options.fnPouplateLevelWithData, this)(level, data);
             }
         }

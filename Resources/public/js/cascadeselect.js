@@ -137,7 +137,7 @@
         
         // re-select previously selected option (multiple select case only)
         for(var i=0; i<selectionValue.length; i++) {
-            $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true);
+            $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true).change();
         }
         
         this.$container.trigger('cascade_select.after_populate', [level, options]);
@@ -353,7 +353,7 @@
             var $select = this.getLevelSelect(l+1);
             
             for(var i=0; i<path[l].length; i++) {
-                $select.find('option[value="' + path[l][i] + '"]').prop('selected', true);
+                $select.find('option[value="' + path[l][i] + '"]').prop('selected', true).change();
             }
             
             // define next level list

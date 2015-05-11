@@ -60,7 +60,7 @@
         }
         
         // manage empty selection
-        if (this.getLevelValues(level).length === 0) {
+        if (this.getLevelValues(level).length === 0 || (this.getLevelValues(level).length === 1 && $.inArray("", this.getLevelValues(level)) === 0)) {
             $.proxy(this.options.fnRemoveNextSelections, this)(level+1);
         }else{
         
@@ -68,10 +68,11 @@
             var options = this.getLastSelectedLevelOptionsFromPath(path);
 
             $.proxy(this.options.fnPouplateLevelWithData, this)(level+1, options);
-
-            // auto call with next level
-            $.proxy(this.options.fnPopulateNextLevels, this)(level+1, options);
         }
+        
+        // auto call with next level
+        $.proxy(this.options.fnPopulateNextLevels, this)(level+1, options);
+        
         
     };
     
@@ -173,7 +174,7 @@
     CascadeSelect.DEFAULTS.fnRemoveNextSelections = function(level) {
         
         for(var l=level; l<=this.maxLevel; l++) {
-            var directStart = this.options.selects[level - 1].directStart;
+            var directStart = this.options.selects[l - 1].directStart;
             if(typeof directStart !== 'undefined' && directStart){   
                 var data = this.options.fnGetOptionsForLevel(l, this.options.data);
                 $.proxy(this.options.fnPouplateLevelWithData, this)(l, data);

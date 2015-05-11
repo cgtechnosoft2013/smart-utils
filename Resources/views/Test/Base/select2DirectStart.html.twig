@@ -1,0 +1,98 @@
+{% extends 'SDLabSmartUtilsBundle::base.html.twig' %}
+
+{% block body %}
+
+<h2>sdlab-smart-utils Bundle - select2 test</h2>
+    
+<div id="container" class="row">
+    <div class="col-md-2">
+
+        <select id="select1" class="form-control" multiple="true"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select2" class="form-control" multiple="true"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select3">
+            <option>...</option>
+            <option value="131" selected="selected">ACA</option>
+        </select>
+        
+    </div>
+</div>
+
+
+
+<script>
+
+    var data = [
+        { 'label': 'A', 'value': 1, children: [
+            { 'label': 'AA', 'value': 11, children: [
+                { 'label': 'AAA', 'value': 111, 'group': 'Group AAA', 'data': {'subtitle': 'Sous titre AAA'} },
+                { 'label': 'AAB', 'value': 112, 'group': 'Group AAA', 'data': {'subtitle': 'Sous titre AAB'} }
+            ]},
+            { 'label': 'AB', 'value': 12, children: [
+                { 'label': 'ABA', 'value': 121, 'group': 'Group BBB', 'data': {'subtitle': 'Sous titre ABA'} }
+            ]},
+            { 'label': 'AC', 'value': 13, children: [
+                { 'label': 'ACA', 'value': 131, 'group': 'Group BBB', 'data': {'subtitle': 'Sous titre ACA'} },
+                { 'label': 'ACB', 'value': 132, 'group': 'Group AAA', 'data': {'subtitle': 'Sous titre ACB'} },
+                { 'label': 'ACC', 'value': 133, 'group': 'Group BBB', 'data': {'subtitle': 'Sous titre ACC'} }
+            ]}
+        ]},
+        { 'label': 'B', 'value': 2, children: [
+            { 'label': 'BA', 'value': 21, children: [
+                { 'label': 'BAB', 'value': 211, 'group': 'Group AAA', 'data': {'subtitle': 'Sous titre BAB'} }
+            ]},
+            { 'label': 'BB', 'value': 22, children: [
+                { 'label': 'BBA', 'value': 221, 'group': 'Group BBB', 'data': {'subtitle': 'Sous titre BBA'} },
+                { 'label': 'BBB', 'value': 222, 'group': 'Group AAA', 'data': {'subtitle': 'Sous titre BBB'} },
+                { 'label': 'BBC', 'value': 223, 'group': 'Group AAA', 'data': {'subtitle': 'Sous titre BBC'} }
+            ]}
+        ]}
+    ];
+    
+    var addSubTitle = function(object, container, query) {
+        
+        if (!object.id) return object.text; // optgroup
+        
+        var subtitle = $(object.element[0].outerHTML).data('subtitle');
+        return object.text + '<br><small>' + (typeof subtitle !== 'undefined' ? subtitle : '') + '</small>';
+    };
+    
+    $().ready(function(){
+        
+        $('#container').cascadeselect({
+            'data': data,
+            'selects': [{
+                'selector': '#select1',
+                'emptyLabel': '...',
+                'directStart': true,
+            },{
+                'selector': '#select2',
+                'emptyLabel': '...',
+                'directStart': true,
+            },{
+                'selector': '#select3',
+                'emptyLabel': '...'
+            }]
+        });
+        
+        $('#select3').select2({
+            'width': '100%',
+            formatResult: addSubTitle,
+            formatSelection: addSubTitle
+        });
+        
+    });
+    
+
+    
+</script>
+
+{% endblock body %}
+

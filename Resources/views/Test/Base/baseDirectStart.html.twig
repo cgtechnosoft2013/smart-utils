@@ -1,0 +1,78 @@
+{% extends 'SDLabSmartUtilsBundle::base.html.twig' %}
+
+{% block body %}
+
+<h2>sdlab-smart-utils Bundle - basic test</h2>
+    
+<div id="container" class="row">
+    <div class="col-md-2">
+
+        <select id="select1" class="form-control"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select2" class="form-control"></select>
+        
+    </div>
+    <div id="container" class="col-md-2">
+        
+        <select id="select3" class="form-control">
+            <option>...</option>
+            <option value="131" selected="selected">ACA</option>
+        </select>
+        
+    </div>
+</div>
+
+
+
+<script>
+
+    var data = [
+        { 'label': 'A', 'value': 1, children: [
+            { 'label': 'AA', 'value': 11, children: [
+                { 'label': 'AAA', 'value': 111 },
+                { 'label': 'AAB', 'value': 112 }
+            ]},
+            { 'label': 'AB', 'value': 12, children: [
+                { 'label': 'ABA', 'value': 121 }
+            ]},
+            { 'label': 'AC', 'value': 13, children: [
+                { 'label': 'ACA', 'value': 131 },
+                { 'label': 'ACB', 'value': 132 },
+                { 'label': 'ACC', 'value': 133 }
+            ]}
+        ]},
+        { 'label': 'B', 'value': 2, children: [
+            { 'label': 'BA', 'value': 21, children: [
+                { 'label': 'BAB', 'value': 211 }
+            ]},
+            { 'label': 'BB', 'value': 22, children: [
+                { 'label': 'BBA', 'value': 221 },
+                { 'label': 'BBB', 'value': 222 },
+                { 'label': 'BBC', 'value': 223 }
+            ]}
+        ]}
+    ];
+    
+    $('#container').cascadeselect({
+        'data': data,
+        'selects': [{
+            'selector': '#select1',
+            'emptyLabel': '...',
+            'directStart': true,
+        },{
+            'selector': '#select2',
+            'emptyLabel': '...',
+            'directStart': true,
+        },{
+            'selector': '#select3',
+            'emptyLabel': '...'
+        }]
+    });
+    
+</script>
+
+{% endblock body %}
+

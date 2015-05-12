@@ -19,6 +19,15 @@ class BaseController extends Controller
     }
     
     /**
+     * @Route("/cascadeselect/test/base/directstart", name="cascadeselect-base-directstart")
+     * @Template("SDLabSmartUtilsBundle:Test:Base/baseDirectStart.html.twig")
+     */
+    public function baseDirectStartAction()
+    {
+        return array();
+    }
+    
+    /**
      * @Route("/cascadeselect/test/multiple", name="cascadeselect-multiple")
      * @Template("SDLabSmartUtilsBundle:Test:Base/multiple.html.twig")
      */
@@ -78,6 +87,15 @@ class BaseController extends Controller
      * @Template("SDLabSmartUtilsBundle:Test:Base/select2.html.twig")
      */
     public function select2Action()
+    {
+        return array();
+    }
+
+    /**
+     * @Route("/cascadeselect/test/select2/directstart", name="cascadeselect-select2-directstart")
+     * @Template("SDLabSmartUtilsBundle:Test:Base/select2DirectStart.html.twig")
+     */
+    public function select2DirectStartAction()
     {
         return array();
     }

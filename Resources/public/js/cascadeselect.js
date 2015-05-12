@@ -60,17 +60,19 @@
         }
         
         // manage empty selection
-        if (this.getLevelValues(level).length === 0) {
+        if (this.getLevelValues(level).length === 0 || (this.getLevelValues(level).length === 1 && $.inArray("", this.getLevelValues(level)) === 0)) {
             $.proxy(this.options.fnRemoveNextSelections, this)(level+1);
+        }else{
+        
+            var path = this.createPathFromLevel(level);
+            var options = this.getLastSelectedLevelOptionsFromPath(path);
+
+            $.proxy(this.options.fnPouplateLevelWithData, this)(level+1, options);
         }
-        
-        var path = this.createPathFromLevel(level);
-        var options = this.getLastSelectedLevelOptionsFromPath(path);
-        
-        $.proxy(this.options.fnPouplateLevelWithData, this)(level+1, options);
         
         // auto call with next level
         $.proxy(this.options.fnPopulateNextLevels, this)(level+1, options);
+        
         
     };
     
@@ -136,7 +138,7 @@
         
         // re-select previously selected option (multiple select case only)
         for(var i=0; i<selectionValue.length; i++) {
-            $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true);
+            $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true).change();
         }
         
         this.$container.trigger('cascade_select.after_populate', [level, options]);
@@ -144,14 +146,41 @@
     
     CascadeSelect.DEFAULTS.fnPouplateFirstLevel = function() {
         
-        $.proxy(this.options.fnPouplateLevelWithData, this)(1, this.options.data);
+        
+        for(var level=1; level < this.options.selects.length; level++) {
+            var data = this.options.fnGetOptionsForLevel(level, this.options.data);
+            var directStart = this.options.selects[level - 1].directStart;
+            if(typeof directStart !== 'undefined' && directStart || level === 1){       
+                $.proxy(this.options.fnPouplateLevelWithData, this)(level, data);
+            }
+        }
         
     };
+    
+    CascadeSelect.DEFAULTS.fnGetOptionsForLevel = function(level, data) {
+        if (level === 1){
+            return data;
+        }
+        var children = [];
+        $.each(data, function(index, select){
+            $.each(select.children, function(index, child){
+                children.push(child);
+            });
+        });
+        return this.fnGetOptionsForLevel(level-1, children);
+    };
+    
     
     CascadeSelect.DEFAULTS.fnRemoveNextSelections = function(level) {
         
         for(var l=level; l<=this.maxLevel; l++) {
-            $.proxy(this.options.fnPouplateLevelWithData, this)(l, {});
+            var directStart = this.options.selects[l - 1].directStart;
+            if(typeof directStart !== 'undefined' && directStart){   
+                var data = this.options.fnGetOptionsForLevel(l, this.options.data);
+                $.proxy(this.options.fnPouplateLevelWithData, this)(l, data);
+            }else{
+                $.proxy(this.options.fnPouplateLevelWithData, this)(l, {});
+            }
         }
     };
     
@@ -241,13 +270,9 @@
     CascadeSelect.prototype.getLastSelectedLevelOptionsFromPath = function(path) {
         
         // initialize on first level with data (=level 1 options)
-        var options = this.options.data;
+        var options = this.options.fnGetOptionsForLevel(path.length, this.options.data);
         
-        for(var i=0; i<path.length; i++) {
-            options = this.getNextLevelOptions(options, path[i]);
-        }
-       
-        return options;
+        return this.getNextLevelOptions(options, path[path.length - 1]);
     };
     
     CascadeSelect.prototype.getNextLevelOptions = function(levelOptions, selectedValues) {
@@ -329,7 +354,7 @@
             var $select = this.getLevelSelect(l+1);
             
             for(var i=0; i<path[l].length; i++) {
-                $select.find('option[value="' + path[l][i] + '"]').prop('selected', true);
+                $select.find('option[value="' + path[l][i] + '"]').prop('selected', true).change();
             }
             
             // define next level list

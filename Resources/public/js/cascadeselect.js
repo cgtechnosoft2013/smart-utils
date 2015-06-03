@@ -121,7 +121,7 @@
             var dataHtml = ''; // be carefull, options have to be XSS ecaped where there're used
             if(typeof options[index].data === 'object') {
                 for(var dataIndex in options[index].data) {
-                    dataHtml += 'data-' + dataIndex + '="' + options[index].data[dataIndex] + '"';
+                    dataHtml += 'data-' + dataIndex + '="' + options[index].data[dataIndex] + '" ';
                 }
             }
             
@@ -130,10 +130,10 @@
             } else {
                 $attachment = $select;
             }
-            $attachment.append('<option ' + '" ' + dataHtml + ' />');
+            $attachment.append('<option ' + dataHtml + ' />');
             $attachment.find('option').last()
                 .val(this.escape(options[index].value))
-                .text(this.escape(options[index].label));
+                .text(options[index].label);
         }
         
         // re-select previously selected option (multiple select case only)

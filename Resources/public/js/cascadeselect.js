@@ -144,13 +144,7 @@
         this.$container.trigger('cascade_select.after_populate', [level, options]);
     };
 
-<<<<<<< HEAD
-    CascadeSelect.DEFAULTS.fnPopulateFirstLevel = function() {
-=======
     CascadeSelect.DEFAULTS.fnPouplateFirstLevel = function() {
->>>>>>> Eloise : Fix array order bug on chrome
-
-
         for(var level=1; level < this.options.selects.length; level++) {
             var data = this.options.fnGetOptionsForLevel(level, this.options.data);
             var directStart = this.options.selects[level - 1].directStart;
@@ -214,11 +208,7 @@
         this.options = this.getOptions(options);
         this.maxLevel = this.options.selects.length;
 
-<<<<<<< HEAD
-        $.proxy(this.options.fnPopulateFirstLevel, this)();
-=======
         $.proxy(this.options.fnPouplateFirstLevel, this)();
->>>>>>> Eloise : Fix array order bug on chrome
         $.proxy(this.options.fnAddChangeListeners, this)();
         $.proxy(this.options.fnApplyLastLevelSelection, this)();
 
@@ -402,20 +392,16 @@
         });
     };
 
-<<<<<<< HEAD
     CascadeSelect.prototype.updateData = function(data) {
         this.options.data = data;
         $.proxy(this.options.fnPopulateFirstLevel, this)();
     }
-=======
->>>>>>> Eloise : Fix array order bug on chrome
 
     // CASCADESELECT PLUGIN DEFINITION
     // ===============================
 
     function Plugin(option) {
 
-<<<<<<< HEAD
         if (typeof option == 'string') {
             switch(option) {
                 case 'getInstance':
@@ -423,9 +409,7 @@
                     return data;
             }
         }
-
-=======
->>>>>>> Eloise : Fix array order bug on chrome
+        
         return this.each(function() {
             var $this = $(this);
             var data = $this.data('bs.cascadeselect');

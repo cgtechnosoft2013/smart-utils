@@ -67,7 +67,7 @@
             var path = this.createPathFromLevel(level);
             var options = this.getLastSelectedLevelOptionsFromPath(path);
 
-            $.proxy(this.options.fnPouplateLevelWithData, this)(level+1, options);
+            $.proxy(this.options.fnPopulateLevelWithData, this)(level+1, options);
         }
 
         // auto call with next level
@@ -77,7 +77,7 @@
     };
 
 
-    CascadeSelect.DEFAULTS.fnPouplateLevelWithData = function(level, options) {
+    CascadeSelect.DEFAULTS.fnPopulateLevelWithData = function(level, options) {
 
         var $select = this.getLevelSelect(level);
 
@@ -144,12 +144,12 @@
         this.$container.trigger('cascade_select.after_populate', [level, options]);
     };
 
-    CascadeSelect.DEFAULTS.fnPouplateFirstLevel = function() {
+    CascadeSelect.DEFAULTS.fnPopulateFirstLevel = function() {
         for(var level=1; level < this.options.selects.length; level++) {
             var data = this.options.fnGetOptionsForLevel(level, this.options.data);
             var directStart = this.options.selects[level - 1].directStart;
             if(typeof directStart !== 'undefined' && directStart || level === 1){
-                $.proxy(this.options.fnPouplateLevelWithData, this)(level, data);
+                $.proxy(this.options.fnPopulateLevelWithData, this)(level, data);
             }
         }
 
@@ -175,9 +175,9 @@
             var directStart = this.options.selects[l - 1].directStart;
             if(typeof directStart !== 'undefined' && directStart){
                 var data = this.options.fnGetOptionsForLevel(l, this.options.data);
-                $.proxy(this.options.fnPouplateLevelWithData, this)(l, data);
+                $.proxy(this.options.fnPopulateLevelWithData, this)(l, data);
             }else{
-                $.proxy(this.options.fnPouplateLevelWithData, this)(l, {});
+                $.proxy(this.options.fnPopulateLevelWithData, this)(l, {});
             }
         }
     };
@@ -208,7 +208,7 @@
         this.options = this.getOptions(options);
         this.maxLevel = this.options.selects.length;
 
-        $.proxy(this.options.fnPouplateFirstLevel, this)();
+        $.proxy(this.options.fnPopulateFirstLevel, this)();
         $.proxy(this.options.fnAddChangeListeners, this)();
         $.proxy(this.options.fnApplyLastLevelSelection, this)();
 
@@ -409,7 +409,7 @@
                     return data;
             }
         }
-        
+
         return this.each(function() {
             var $this = $(this);
             var data = $this.data('bs.cascadeselect');

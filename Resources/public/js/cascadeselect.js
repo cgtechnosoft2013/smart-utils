@@ -90,7 +90,9 @@
         $select.html('');
         if($select.hasClass('select2')) {
             $select.select2('val', null);
-        }
+        }else if($select.hasClass('chosen-select')){
+            $select.trigger("chosen:updated");
+        } 
 
         if(!$select.attr('multiple')) {
             $select.append('<option value="">' + this.escape(this.options.selects[level-1].emptyLabel) + '</option>');

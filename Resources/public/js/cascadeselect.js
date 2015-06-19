@@ -139,14 +139,13 @@
         }
 
         // re-select previously selected option (multiple select case only)
+        for(var i=0; i<selectionValue.length; i++) {            
+            $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true);
+        }
         if($select.hasClass('select2')){      
             $select.select2('val', selectionValue);
-        }else{
-            for(var i=0; i<selectionValue.length; i++) {            
-                $select.find('option[value="' + selectionValue[i] + '"]').prop('selected', true);
-            }
         }
-
+        
         this.$container.trigger('cascade_select.after_populate', [level, options]);
     };
 
@@ -356,12 +355,11 @@
 
         for(var l=0; l<path.length; l++) {
             var $select = this.getLevelSelect(l+1);
-            if($select.hasClass('select2')){      
+            for(var i=0; i<path[l].length; i++) {
+                $select.find('option[value="' + path[l][i] + '"]').prop('selected', true);
+            }
+            if($select.hasClass('select2')){
                 $select.select2('val', path[l]);
-            }else {
-                for(var i=0; i<path[l].length; i++) {
-                    $select.find('option[value="' + path[l][i] + '"]').prop('selected', true);
-                }
             }
 
             // define next level list

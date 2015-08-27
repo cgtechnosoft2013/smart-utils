@@ -14,30 +14,30 @@ class QueryBuilder
     protected $qbResult;
     protected $qbIds;
     
-    protected $tablesInQbCount = array();
+    protected $tablesInQbIds = array();
     
-    public function __construct($qbResult, $qbCount)
+    public function __construct($qbResult, $qbIds)
     {
         $this->qbResult = $qbResult;
-        $this->qbIds = $qbCount;
+        $this->qbIds = $qbIds;
     }
     
-    public function addTableInQbCount($tableName, $alias)
+    public function addTableInQbIds($tableName, $alias)
     {
-        if (!$this->isTablePresentInQbCountFrom($tableName)) {
+        if (!$this->isTablePresentInQbIdsFrom($tableName)) {
             $this->qbIds->leftJoin($tableName, $alias);
-            $this->addTableInQbCountFrom($tableName);
+            $this->addTableInQbIdsFrom($tableName);
         }
     }
     
-    protected function isTablePresentInQbCountFrom($tablename)
+    protected function isTablePresentInQbIdsFrom($tablename)
     {
-        return in_array($tablename, $this->tablesInQbCount);
+        return in_array($tablename, $this->tablesInQbIds);
     }
     
-    protected function addTableInQbCountFrom($tablename)
+    protected function addTableInQbIdsFrom($tablename)
     {
-        $this->tablesInQbCount[$tablename] = $tablename;
+        $this->tablesInQbIds[$tablename] = $tablename;
     }
     
     public function __call($method, $args)

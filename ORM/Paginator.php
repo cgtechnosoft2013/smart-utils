@@ -16,13 +16,13 @@ use Doctrine\ORM\NoResultException;
  */
 class Paginator extends DoctrinePaginator
 {
-    private $queryCount;
+    private $queryIds;
     
-    public function __construct($query, $queryCount = null, $fetchJoinCollection = true)
+    public function __construct($query, $queryIds = null, $fetchJoinCollection = true)
     {
         parent::__construct($query, $fetchJoinCollection);
         
-        $this->queryCount = $queryCount;
+        $this->queryIds = $queryIds;
     }
     
     public function count()
@@ -31,7 +31,7 @@ class Paginator extends DoctrinePaginator
         if ($this->count === null) {
             try {
                 
-                $this->count = array_sum(array_map('current', $this->getCountQuery()->getScalarResult()));
+                $this->count = array_sum(array_map('current', $this->getIdsQuery()->getScalarResult()));
             } catch(NoResultException $e) {
                 $this->count = 0;
             }
@@ -40,58 +40,13 @@ class Paginator extends DoctrinePaginator
         return $this->count;
     }
     
-    private function getCountQuery()
-    {
-        if (!isset($this->queryCount)) {
-            return parent::getCountQuery();
-        }
-        
-        /* @var $countQuery Query */
-        $countQuery = $this->cloneQuery($this->queryCount);
-
-        if ( ! $countQuery->hasHint(CountWalker::HINT_DISTINCT)) {
-            $countQuery->setHint(CountWalker::HINT_DISTINCT, true);
-        }
-
-        if ($this->useOutputWalker($countQuery)) {
-            $platform = $countQuery->getEntityManager()->getConnection()->getDatabasePlatform(); // law of demeter win
-
-            $rsm = new ResultSetMapping();
-            $rsm->addScalarResult($platform->getSQLResultCasing('dctrn_count'), 'count');
-
-            $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Doctrine\ORM\Tools\Pagination\CountOutputWalker');
-            $countQuery->setResultSetMapping($rsm);
-        } else {
-            $this->appendTreeWalker($countQuery, 'Doctrine\ORM\Tools\Pagination\CountWalker');
-        }
-
-        $countQuery->setFirstResult(null)->setMaxResults(null);
-
-        $parser            = new Parser($countQuery);
-        $parameterMappings = $parser->parse()->getParameterMappings();
-        /* @var $parameters \Doctrine\Common\Collections\Collection|\Doctrine\ORM\Query\Parameter[] */
-        $parameters        = $countQuery->getParameters();
-
-        foreach ($parameters as $key => $parameter) {
-            $parameterName = $parameter->getName();
-
-            if( ! (isset($parameterMappings[$parameterName]) || array_key_exists($parameterName, $parameterMappings))) {
-                unset($parameters[$key]);
-            }
-        }
-
-        $countQuery->setParameters($parameters);
-
-        return $countQuery;
-    }
-    
     public function getIterator()
     {
         $offset = $this->getQuery()->getFirstResult();
         $length = $this->getQuery()->getMaxResults();
 
         if ($this->getFetchJoinCollection()) {
-            $subQuery = $this->queryCount;
+            $subQuery = $this->queryIds;
 
             if ($this->useOutputWalker($subQuery)) {
                 $subQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Doctrine\ORM\Tools\Pagination\LimitSubqueryOutputWalker');

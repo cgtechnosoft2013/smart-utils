@@ -15,6 +15,7 @@ class QueryBuilder
     protected $qbIds;
     
     protected $tablesInQbIds = array();
+    protected $addOnlyToQbResult = false;
     
     public function __construct($qbResult, $qbIds)
     {
@@ -42,15 +43,31 @@ class QueryBuilder
     
     public function __call($method, $args)
     {
+        if (!$this->addOnlyToQbResult) {
+            call_user_func_array(array($this->qbIds, $method), $args);
+        }
         call_user_func_array(array($this->qbResult, $method), $args);
-        call_user_func_array(array($this->qbIds, $method), $args);
         
         return $this;
+    }
+    
+    /**
+     * Allow to add condition only to the main query (change state by passing boolean)
+     * @param type $bool
+     */
+    public function addOnlyToQbResult($bool)
+    {
+        $this->addOnlyToQbResult = $bool;
     }
     
     public function getQuery()
     {
         return $this->qbResult->getQuery();
+    }
+    
+    public function getQueryIds()
+    {
+        return $this->qbIds->getQuery();
     }
     
     public function getPaginator()
